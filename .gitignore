@@ -7,10 +7,12 @@
 /public/bundles/
 /var/
 /vendor/
+/src/Migrations/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
 /phpunit.xml
+.idea/
 ###< symfony/phpunit-bridge ###
