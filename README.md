@@ -76,3 +76,7 @@ requirements.
 - Run your Symfony Application
 
         symfony serve
+   
+ - Open the application in your browser
+ 
+        https://localhost:8000
