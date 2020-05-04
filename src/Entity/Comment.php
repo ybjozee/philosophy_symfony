@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Utility\DateTimeUtility;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -23,7 +24,7 @@ class Comment
      * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $post;
+    private Post $post;
 
     /**
      * @ORM\Column(type="text")
@@ -48,7 +49,7 @@ class Comment
      */
     private $author;
 
-    public static function createFromDateTime(DateTimeInterface $dateTime) : self
+    public static function createFromDateTime(DateTimeInterface $dateTime): self
     {
         $self = new self();
         $self->setPublishedAt($dateTime);
@@ -103,9 +104,18 @@ class Comment
         return $this->author;
     }
 
-    public function setAuthor(User $author): self
+    public function setAuthor(UserInterface $author): self
     {
         $this->author = $author;
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'author' => $this->author->getUsername(),
+            'content' => $this->content,
+            'publishedAt' => $this->publishedAt->format('M j, Y @ G:i'),
+        ];
     }
 }

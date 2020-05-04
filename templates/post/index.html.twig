@@ -56,3 +56,8 @@
     {% include 'extraSection.html.twig' with {'featuredPosts' : featuredPosts, 'tags' : tags} %}
 
 {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/comment.js') }}">
+
+    </script>
+{% endblock %}

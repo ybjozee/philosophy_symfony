@@ -8,6 +8,7 @@
 /var/
 /vendor/
 /src/Migrations/
+/public/.DS_Store
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

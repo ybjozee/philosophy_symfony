@@ -287,4 +287,11 @@ class Post
 
         return $this;
     }
+
+    public function getJavascriptArray() : array {
+        return [
+            'numberOfComments' => count($this->comments),
+            'comments' => array(fn(Comment $comment) => $comment->toArray(), $this->comments)
+        ];
+    }
 }

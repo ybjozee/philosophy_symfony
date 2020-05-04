@@ -31,14 +31,17 @@ class CommentRepository extends ServiceEntityRepository
         return (new Paginator($qb))->paginate($page);
     }
 
-    public function getCommentsForPost(Post $post, int $page = 1): Paginator
+    public function getCommentsForPost(int $post)
     {
-        $qb = $this->createQueryBuilder('comment')
+        return $this->createQueryBuilder('comment')
             ->where('comment.post = :post')
             ->setParameter('post', $post)
-            ->orderBy('comment.publishedAt', 'DESC');
-        return (new Paginator($qb))->paginate($page);
+            ->orderBy('comment.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
+
+
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */
