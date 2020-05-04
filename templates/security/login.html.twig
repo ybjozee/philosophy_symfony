@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="s-content s-content--narrow">
+
+        <div class="row">
+
+            <div class="s-content__header col-full">
+                <h1 class="s-content__header-title">
+                    Login
+                </h1>
+
+                {% if error %}
+                    <h1 style="color: red">{{ error.messageKey|trans(error.messageData, 'security') }}</h1>
+                {% endif %}
+            </div> <!-- end s-content__header -->
+
+            <form method="post">
+                <div class="s-content__header col-full">
+
+                    <h3>Please provide your email and password</h3>
+                    <label for="inputEmail">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                           class="full-width centredInput"
+                           required
+                           autofocus>
+                    <label for="inputPassword" style="margin-top: 50px">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="full-width centredInput"
+                           required>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Remember me
+                        </label>
+                    </div>
+
+                    <button class="btn btn--primary full-width" type="submit">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

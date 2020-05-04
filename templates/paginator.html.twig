@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-full">
+        <nav class="pgn">
+            {% set endPage = max([1, paginator.numResults // paginator.pageSize | round(0,'ceil') ]) %}
+            <ul>
+                <li><a class="pgn__prev"
+                       href="{% if (paginator.currentPage is not same as (1) ) %}{{ path(pathName , {'page' : max([1, paginator.currentPage - 1])}) }}{% else %}#{% endif %}">Prev</a>
+                </li>
+                {% for i in 1..endPage %}
+                    <li>
+                        <a class="pgn__num {% if i is same as (paginator.currentPage) %}current{% endif %}"
+                           href="{{ path(pathName, {'page': i}) }}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endfor %}
+                <li><a class="pgn__next"
+                       href="{% if (endPage is not same as (1) ) %}{{ path(pathName, {'page' : min([endPage, paginator.currentPage + 1])}) }}{% else %}#{% endif %}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

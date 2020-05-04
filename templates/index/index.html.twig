@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="s-pageheader s-pageheader--home">
+        {% include 'header.html.twig' %}
+        <div class="pageheader-content row">
+            <div class="col-full">
+                <div class="featured">
+                    <div class="featured__column featured__column--big">
+                        {% set mainPost = featuredPosts|first %}
+                        <div class="entry" style="background-image:url('{{ mainPost.headerImage }}');">
+
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="#0">{{ mainPost.category }}</a></span>
+
+                                <h1><a href="#0" title="">{{ mainPost.title }}</a></h1>
+
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="/images/avatars/user-03.jpg" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="#0">{{ mainPost.author.username }}</a></li>
+                                        <li>{{ mainPost.publishedAt | date("d F, Y") }}</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+                        </div> <!-- end entry -->
+                    </div> <!-- end featured__big -->
+                    <div class="featured__column featured__column--small">
+                        {% for item in featuredPosts|slice(1) %}
+                            <div class="entry"
+                                 style="background-image:url('{{ item.headerImage }}');">
+
+                                <div class="entry__content">
+                                    <span class="entry__category"><a href="#0">{{ item.category }}</a></span>
+
+                                    <h1><a href="#0" title="">{{ item.title }}</a></h1>
+
+                                    <div class="entry__info">
+                                        <a href="#0" class="entry__profile-pic">
+                                            <img class="avatar" src="/images/avatars/user-03.jpg" alt="">
+                                        </a>
+
+                                        <ul class="entry__meta">
+                                            <li><a href="#0">{{ item.author.username }}</a></li>
+                                            <li>{{ item.publishedAt | date("d F, Y") }}</li>
+                                        </ul>
+                                    </div>
+                                </div> <!-- end entry__content -->
+
+                            </div> <!-- end entry -->
+                        {% endfor %}
+                    </div> <!-- end featured -->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- s-content
+    ================================================== -->
+    <section class="s-content">
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
+
+                {% if paginator.numResults > 0 %}
+                    {% include 'standardArticle.html.twig' with {'post' : paginator.results |first }  only %}
+                {% endif %}
+
+                <article class="masonry__brick entry format-quote" data-aos="fade-up">
+
+                    <div class="entry__thumb">
+                        <blockquote>
+                            <p>Good design is making something intelligible and memorable. Great design is making
+                                something memorable and meaningful.</p>
+
+                            <cite>Dieter Rams</cite>
+                        </blockquote>
+                    </div>
+
+                </article> <!-- end article -->
+
+                {% for post in featuredPosts | slice(0,2) %}
+                    {% include 'standardArticle.html.twig' with {'post' : post }  only %}
+                {% endfor %}
+
+                {% if paginator.numResults > 1 %}
+                    {% for post in paginator.results | slice(1,6) %}
+                        {% include 'standardArticle.html.twig' with {'post' : post }  only %}
+                    {% endfor %}
+                {% endif %}
+
+                <article class="masonry__brick entry format-link" data-aos="fade-up">
+
+                    <div class="entry__thumb">
+                        <div class="link-wrap">
+                            <p>The Only Resource You Will Need To Start a Blog Using WordPress.</p>
+                            <cite>
+                                <a target="_blank" href="https://colorlib.com/">https://colorlib.com</a>
+                            </cite>
+                        </div>
+                    </div>
+
+                </article> <!-- end article -->
+
+                {% if paginator.numResults > 6 %}
+                    {% for post in paginator.results | slice(6) %}
+                        {% include 'standardArticle.html.twig' with {'post' : post }  only %}
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+        </div>
+
+        {% include 'paginator.html.twig' with {'paginator': paginator, 'pathName' : 'index'} only %}
+    </section>
+
+
+    <!-- s-extra
+    ================================================== -->
+    <section class="s-extra">
+
+        <div class="row top">
+
+            <div class="col-eight md-six tab-full popular">
+                <h3>Popular Posts</h3>
+
+                <div class="block-1-2 block-m-full popular__posts">
+                    {% for post in featuredPosts %}
+                        {% include 'extraArticle.html.twig' with {'post' : post} only %}
+                    {% endfor %}
+
+                    {% for post in paginator.results | slice(3,3) %}
+                        {% include 'extraArticle.html.twig' with {'post' : post} only %}
+                    {% endfor %}
+                </div>
+            </div>
+
+
+            <div class="col-four md-six tab-full about">
+                <h3>About Philosophy</h3>
+
+                <p>
+                    Donec sollicitudin molestie malesuada. Nulla quis lorem ut libero malesuada feugiat. Pellentesque in
+                    ipsum id orci porta dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+                    posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
+                    Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec sollicitudin molestie malesuada.
+                </p>
+
+                <ul class="about__social">
+                    <li>
+                        <a href="#0"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                    </li>
+                </ul> <!-- end header__social -->
+            </div> <!-- end about -->
+        </div>
+
+
+        <div class="row bottom tags-wrap">
+            <div class="col-full tags">
+                <h3>Tags</h3>
+                <div class="tagcloud">
+                    {% for tag in tags %}
+                        <a href="{{ path('index', {'tag' : tag.name}) }}">{{ tag.name }}</a>
+                    {% endfor %}
+                </div> <!-- end tagcloud -->
+            </div> <!-- end tags -->
+        </div> <!-- end tags-wrap -->
+    </section>
+{% endblock %}

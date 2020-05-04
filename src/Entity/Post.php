@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Utility\DateTimeUtility;
+use App\Utility\Slugger;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -41,7 +42,7 @@ class Post
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank
-     * @Assert\Length(min=100, minMessage="Provided content myst be at least 100 characters")
+     * @Assert\Length(min=100, minMessage="Post content must be at least 100 characters")
      */
     private $content;
 
@@ -70,7 +71,8 @@ class Post
     /**
      * @ORM\ManyToMany(
      *     targetEntity="App\Entity\Tag",
-     *     cascade={"persist"}
+     *     cascade={"persist"},
+     *     inversedBy="posts"
      * )
      * @ORM\OrderBy({"name": "ASC"})
      */
@@ -84,7 +86,7 @@ class Post
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isLocalHeader;
+    private $isLocalHeader = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -116,6 +118,7 @@ class Post
     public function setTitle(string $title): self
     {
         $this->title = $title;
+        $this->slug = Slugger::slugify($title);
 
         return $this;
     }

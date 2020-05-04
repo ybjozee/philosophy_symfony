@@ -104,7 +104,7 @@ class PostFixture extends Fixture implements DependentFixtureInterface
     {
         $curl = curl_init();
 
-        $baseUrl = "http://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt";
+        $baseUrl = "https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt";
         curl_setopt_array($curl, array(
             CURLOPT_URL => "{$baseUrl}&apiKey={$this->newsAPIToken}",
             CURLOPT_RETURNTRANSFER => true,

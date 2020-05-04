@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+ {% block body %}
+     <section class="s-content s-content--narrow">
+
+         <div class="row">
+
+             <div class="s-content__header col-full">
+                 <h1 class="s-content__header-title">
+                     {% if post.id is not null %}  Edit {% else %} New {% endif %} Post
+                 </h1>
+
+                 {% for flashMessage in app.session.flashbag.get('success') %}
+
+                     <h1 style="color: green"> {{ flashMessage }}</h1>
+
+                 {% endfor %}
+                 {% for flashMessage in app.session.flashbag.get('error') %}
+
+                     <h1 style="color: red"> {{ flashMessage }}</h1>
+
+                 {% endfor %}
+             </div> <!-- end s-content__header -->
+
+             {{ form_start(form) }}
+             <div class="s-content__header col-full"  style="margin-top: 20px">
+
+                 {{ form_errors(form.title) }}
+                 {{ form_errors(form.abstract) }}
+                 {{ form_errors(form.content) }}
+                 {{ form_errors(form.headerImage) }}
+                 {{ form_errors(form.readMoreUrl) }}
+                 {{ form_errors(form.category) }}
+                 {{ form_errors(form.author) }}
+                 {{ form_errors(form.tags) }}
+
+                 {{ form_label(form.title) }}
+                 {{ form_widget(form.title, {'attr' : {'class':'centredInput full-width'}}) }}
+
+                 {{ form_label(form.abstract) }}
+                 {{ form_widget(form.abstract, {'attr' : {'class':'centredInput full-width'}}) }}
+
+                 {{ form_label(form.content) }}
+                 {{ form_widget(form.content, {'attr' : {'class':'centredInput full-width'}}) }}
+
+                 {{ form_label(form.headerImage) }}
+                 {{ form_widget(form.headerImage, {'attr' : {'class':'centredInput full-width'}}) }}
+
+                 {{ form_label(form.readMoreUrl) }}
+                 {{ form_widget(form.readMoreUrl, {'attr' : {'class':'centredInput full-width'}}) }}
+
+                 {{ form_label(form.category) }}
+                 {{ form_widget(form.category, {'attr' : {'class':'centredInput full-width'}}) }}
+
+                 {{ form_label(form.author) }}
+                 {{ form_widget(form.author, {'attr' : {'class':'centredInput full-width'}}) }}
+
+                 {{ form_label(form.tags) }}
+                 {{ form_widget(form.tags, {'attr' : {'class':'centredInput full-width'}}) }}
+
+                 <button type="submit" class="btn btn--primary full-width">
+                     {% if post.id is not null %}  Update {% else %} Create {% endif %} Post
+                 </button>
+                 {{ form_widget(form.saveAndCreateNew, {label: 'Save and Create New', attr: {class: 'btn btn-primary'}}) }}
+                 <a href="{{ path('admin_view_posts') }}" class="btn btn-link">
+                     Return to Posts
+                 </a>
+             </div>
+             {{ form_end(form) }}
+
+         </div>
+     </section>
+ {% endblock %}

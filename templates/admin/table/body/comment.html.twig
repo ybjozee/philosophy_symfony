@@ -1,0 +1,11 @@
+{% for comment in paginator.results %}
+    <tr>
+        <td>{{ comment.post.title }}</td>
+        <td>{{ comment.content }}</td>
+        <td>{{ comment.author.username }}</td>
+        <td>{{ comment.publishedAt | date('l jS F, Y') }} </td>
+        <td>
+            <a class="icn__delete" href="{{ path('admin_delete_comment', {'id' : comment.id}) }}"></a>
+        </td>
+    </tr>
+{% endfor %}

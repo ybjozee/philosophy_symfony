@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,20 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function findByTag(?string $name): ?Tag
+    {
+        if (!$name) return null;
+        $qb = $this->createQueryBuilder('tag')
+            ->where('tag.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery();
+        try {
+            return $qb
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+            return $qb->getResult()[0];
+        }
+    }
     // /**
     //  * @return Tag[] Returns an array of Tag objects
     //  */
