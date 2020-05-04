@@ -1,0 +1,87 @@
+<!-- comments
+  ================================================== -->
+<div class="comments-wrap">
+
+    <div id="comments" class="row">
+        <div class="col-full">
+
+            {% set numberOfComments = comments | length %}
+            <h3 class="h2">{{ numberOfComments }}
+                Comment{% if (numberOfComments > 1 ) or numberOfComments is same as (0) %}s{% endif %}</h3>
+
+            <!-- commentlist -->
+            <ol class="commentlist">
+                {% for comment in comments %}
+                    <li class="depth-1 comment" style="color: black">
+
+                        <div class="comment__avatar">
+                            <img width="50" height="50" class="avatar" src="/images/avatars/user-01.jpg" alt="">
+                        </div>
+
+                        <div class="comment__content">
+
+                            <div class="comment__info">
+                                <cite>{{ comment.author.username }}</cite>
+
+                                <div class="comment__meta">
+                                    <time class="comment__time">{{ comment.publishedAt | date('M j, Y @ h:m') }}</time>
+                                    <a class="reply" href="#">Report</a>
+                                </div>
+                            </div>
+
+                            <div class="comment__text">
+                                <p>{{ comment.content }}</p>
+                            </div>
+
+                        </div>
+
+                    </li> <!-- end comment level 1 -->
+                {% endfor %}
+            </ol> <!-- end commentlist -->
+
+
+            <!-- respond
+            ================================================== -->
+            {% if app.user is not null %}
+                <div class="respond">
+
+                    <h3 class="h2">Add Comment</h3>
+
+                    <form name="contactForm" id="contactForm" method="post" action="">
+                        <fieldset>
+
+                            <div class="form-field">
+                                <input name="cName" type="text" id="cName" class="full-width" placeholder="Your Name"
+                                       value="">
+                            </div>
+
+                            <div class="form-field">
+                                <input name="cEmail" type="text" id="cEmail" class="full-width" placeholder="Your Email"
+                                       value="">
+                            </div>
+
+                            <div class="form-field">
+                                <input name="cWebsite" type="text" id="cWebsite" class="full-width"
+                                       placeholder="Website"
+                                       value="">
+                            </div>
+
+                            <div class="message form-field">
+                            <textarea name="cMessage" id="cMessage" class="full-width"
+                                      placeholder="Your Message"></textarea>
+                            </div>
+
+                            <button type="submit" class="submit btn--primary btn--large full-width">Submit</button>
+
+                        </fieldset>
+                    </form> <!-- end form -->
+
+                </div> <!-- end respond -->
+            {% else %}
+                <h3 style="color: red"> You need to be <a href="{{ path('app_login') }}">signed in</a> to leave a
+                    comment </h3>
+            {% endif %}
+        </div> <!-- end col-full -->
+
+    </div> <!-- end row comments -->
+</div> <!-- end comments-wrap -->

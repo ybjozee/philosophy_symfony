@@ -1,10 +1,10 @@
 <article class="col-block popular__post">
-    <a href="#" class="popular__thumb">
+    <a href="{{ path('view_post', {'slug': post.slug}) }}" class="popular__thumb">
         <img src="{{ post.headerImage }}" alt="">
     </a>
-    <h5><a href="#0">{{ post.title }}</a></h5>
+    <h5><a href="{{ path('view_post', {'slug': post.slug}) }}">{{ post.title }}</a></h5>
     <section class="popular__meta">
-        <span class="popular__author"><span>By</span> <a href="#0"> {{ post.author.username }}</a></span>
+        <span class="popular__author"><span>By</span> {{ post.author.username }} </span>
         <span class="popular__date"><span>on</span> <time datetime="{{ post.publishedAt|date("Y-m-d") }}">
                 {{ post.publishedAt | date("j F, Y") }}</time></span>
     </section>

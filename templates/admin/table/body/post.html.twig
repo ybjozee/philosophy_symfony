@@ -1,5 +1,5 @@
 {% for post in paginator.results %}
-    <tr>
+    <tr {% if loop.index % 2 == 0 %} style="background-color: lightgrey"{% endif %}>
         <td>{{ post.title }}</td>
         <td>{{ post.author.username }}</td>
         <td>{{ post.publishedAt | date('l jS F, Y') }} </td>

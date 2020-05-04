@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<title>{{ post.title }}</title>{% endblock %}
+
+{% block body %}
+    <div class="s-pageheader">
+        {% include 'header.html.twig' %}
+    </div>
+    <!-- s-content
+    ================================================== -->
+    <section class="s-content s-content--narrow s-content--no-padding-bottom">
+
+        <article class="row format-standard">
+
+            <div class="s-content__header col-full">
+                <h1 class="s-content__header-title">
+                    {{ post.title }}
+                </h1>
+                <ul class="s-content__header-meta">
+                    <li class="date" style="color: black">{{ post.publishedAt | date('F j, Y') }}</li>
+                    <li class="cat" style="color: black">
+                        In
+                        {% for tag in post.tags %}
+                            <a href="{{ path('index', {'tag' : tag.name}) }}">{{ tag.name }}</a>
+                        {% endfor %}
+                    </li>
+                    <li class="cat" style="color: black"><a
+                                href="{{ path('index', {'category' : post.category}) }}">{{ post.category }}</a></li>
+                </ul>
+            </div> <!-- end s-content__header -->
+
+            <div class="s-content__media col-full">
+                <div class="s-content__post-thumb">
+                    <img
+                            src="{% if post.headerImage is not null %}{{ post.headerImage }}{% else %}/images/thumbs/single/standard/standard-1000.jpg{% endif %}"
+                            alt="">
+                </div>
+            </div> <!-- end s-content__media -->
+
+            <div class="col-full s-content__main">
+
+                <blockquote><p>{{ post.abstract }}</p></blockquote>
+
+                <p>
+                    <img src="/images/wheel-1000.jpg"
+                         srcset="images/wheel-2000.jpg 2000w, images/wheel-1000.jpg 1000w, images/wheel-500.jpg 500w"
+                         sizes="(max-width: 2000px) 100vw, 2000px" alt="">
+                </p>
+            </div> <!-- end s-content__main -->
+
+            <p>{{ post.content }}</p>
+        </article>
+
+        {% include 'post/comments.html.twig' with {'comments' : post.comments} %}
+    </section>
+    {% include 'extraSection.html.twig' with {'featuredPosts' : featuredPosts, 'tags' : tags} %}
+
+{% endblock %}

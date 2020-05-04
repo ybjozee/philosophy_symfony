@@ -32,7 +32,7 @@
 
                 <div class="table-responsive">
 
-                    <table>
+                    <table style="border-collapse: collapse">
                         <thead>
                         <tr>
                             {% if showPosts %}
@@ -48,7 +48,6 @@
                         {% else %}
                             {% include 'admin/table/body/comment.html.twig' %}
                         {% endif %}
-
                         </tbody>
                     </table>
 

@@ -1,5 +1,5 @@
 {% for comment in paginator.results %}
-    <tr>
+    <tr {% if loop.index % 2 == 0 %} style="background-color: lightgrey"{% endif %}>
         <td>{{ comment.post.title }}</td>
         <td>{{ comment.content }}</td>
         <td>{{ comment.author.username }}</td>

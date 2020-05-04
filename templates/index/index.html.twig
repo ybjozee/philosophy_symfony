@@ -11,50 +11,46 @@
                         <div class="entry" style="background-image:url('{{ mainPost.headerImage }}');">
 
                             <div class="entry__content">
-                                <span class="entry__category"><a href="#0">{{ mainPost.category }}</a></span>
+                                <span class="entry__category"><a href="{{ path('index', {'category' : mainPost.category}) }}">{{ mainPost.category }}</a></span>
 
-                                <h1><a href="#0" title="">{{ mainPost.title }}</a></h1>
+                                <h1><a href="{{ path('view_post', {'slug': mainPost.slug}) }}"
+                                       title="">{{ mainPost.title }}</a></h1>
 
                                 <div class="entry__info">
-                                    <a href="#0" class="entry__profile-pic">
+                                    <span class="entry__profile-pic">
                                         <img class="avatar" src="/images/avatars/user-03.jpg" alt="">
-                                    </a>
+                                    </span>
 
                                     <ul class="entry__meta">
-                                        <li><a href="#0">{{ mainPost.author.username }}</a></li>
+                                        <li>{{ mainPost.author.username }}</li>
                                         <li>{{ mainPost.publishedAt | date("d F, Y") }}</li>
                                     </ul>
                                 </div>
                             </div> <!-- end entry__content -->
                         </div> <!-- end entry -->
                     </div> <!-- end featured__big -->
-                    <div class="featured__column featured__column--small">
                         {% for item in featuredPosts|slice(1) %}
-                            <div class="entry"
-                                 style="background-image:url('{{ item.headerImage }}');">
+                    <div class="featured__column featured__column--small">
+                        <div class="entry"
+                             style="background-image:url('{{ item.headerImage }}');">
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="{{ path('index', {'category' : item.category}) }}">{{ item.category }}</a></span>
 
-                                <div class="entry__content">
-                                    <span class="entry__category"><a href="#0">{{ item.category }}</a></span>
+                                <h1><a href="{{ path('view_post', {'slug' : item.slug}) }}"
+                                       title="">{{ item.title }}</a></h1>
 
-                                    <h1><a href="#0" title="">{{ item.title }}</a></h1>
+                                <ul class="entry__meta">
+                                    <li>{{ item.author.username }}</li>
+                                    <li>{{ item.publishedAt | date("d F, Y") }}</li>
+                                </ul>
+                            </div>
+                        </div> <!-- end entry__content -->
 
-                                    <div class="entry__info">
-                                        <a href="#0" class="entry__profile-pic">
-                                            <img class="avatar" src="/images/avatars/user-03.jpg" alt="">
-                                        </a>
-
-                                        <ul class="entry__meta">
-                                            <li><a href="#0">{{ item.author.username }}</a></li>
-                                            <li>{{ item.publishedAt | date("d F, Y") }}</li>
-                                        </ul>
-                                    </div>
-                                </div> <!-- end entry__content -->
-
-                            </div> <!-- end entry -->
-                        {% endfor %}
-                    </div> <!-- end featured -->
-                </div>
+                    </div> <!-- end entry -->
+                    {% endfor %}
+                </div> <!-- end featured -->
             </div>
+        </div>
         </div>
 
     </section>
@@ -120,65 +116,5 @@
         {% include 'paginator.html.twig' with {'paginator': paginator, 'pathName' : 'index'} only %}
     </section>
 
-
-    <!-- s-extra
-    ================================================== -->
-    <section class="s-extra">
-
-        <div class="row top">
-
-            <div class="col-eight md-six tab-full popular">
-                <h3>Popular Posts</h3>
-
-                <div class="block-1-2 block-m-full popular__posts">
-                    {% for post in featuredPosts %}
-                        {% include 'extraArticle.html.twig' with {'post' : post} only %}
-                    {% endfor %}
-
-                    {% for post in paginator.results | slice(3,3) %}
-                        {% include 'extraArticle.html.twig' with {'post' : post} only %}
-                    {% endfor %}
-                </div>
-            </div>
-
-
-            <div class="col-four md-six tab-full about">
-                <h3>About Philosophy</h3>
-
-                <p>
-                    Donec sollicitudin molestie malesuada. Nulla quis lorem ut libero malesuada feugiat. Pellentesque in
-                    ipsum id orci porta dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-                    posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                    Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec sollicitudin molestie malesuada.
-                </p>
-
-                <ul class="about__social">
-                    <li>
-                        <a href="#0"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="#0"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="#0"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="#0"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                    </li>
-                </ul> <!-- end header__social -->
-            </div> <!-- end about -->
-        </div>
-
-
-        <div class="row bottom tags-wrap">
-            <div class="col-full tags">
-                <h3>Tags</h3>
-                <div class="tagcloud">
-                    {% for tag in tags %}
-                        <a href="{{ path('index', {'tag' : tag.name}) }}">{{ tag.name }}</a>
-                    {% endfor %}
-                </div> <!-- end tagcloud -->
-            </div> <!-- end tags -->
-        </div> <!-- end tags-wrap -->
-    </section>
+    {% include 'extraSection.html.twig' with {'featuredPosts' : featuredPosts, 'tags' : tags} %}
 {% endblock %}

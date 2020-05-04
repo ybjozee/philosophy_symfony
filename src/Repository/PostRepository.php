@@ -21,11 +21,12 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function getFeaturedPosts(){
+    public function getFeaturedPosts()
+    {
         return $this->findBy([], ['id' => 'DESC'], 3);
     }
 
-    public function getPage(int $page = 1, Tag $tag = null): Paginator
+    public function getPage(int $page = 1, Tag $tag = null, string $categoryName = null): Paginator
     {
         $qb = $this->createQueryBuilder('post')
             ->addSelect('a', 't')
@@ -35,7 +36,10 @@ class PostRepository extends ServiceEntityRepository
         if ($tag !== null) {
             $qb->andWhere(':tag MEMBER OF post.tags')
                 ->setParameter('tag', $tag);
-
+        }
+        if ($categoryName !== null) {
+            $qb->andWhere('post.category = :categoryName')
+                ->setParameter('categoryName', $categoryName);
         }
         return (new Paginator($qb))->paginate($page);
     }

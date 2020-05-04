@@ -52,11 +52,11 @@
                 <li class="has-children">
                     <a href="#0" title="">Categories</a>
                     <ul class="sub-menu">
-                        <li><a href="#">Technology</a></li>
-                        <li><a href="#">Software</a></li>
-                        <li><a href="#">Programming</a></li>
-                        <li><a href="#">Music</a></li>
-                        <li><a href="#">Sleep</a></li>
+                        <li><a href="{{ path('index' , {'category' : 'Technology'}) }}">Technology</a></li>
+                        <li><a href="{{ path('index' , {'category' : 'Software'}) }}">Software</a></li>
+                        <li><a href="{{ path('index' , {'category' : 'Programming'}) }}">Programming</a></li>
+                        <li><a href="{{ path('index' , {'category' : 'Music'}) }}">Music</a></li>
+                        <li><a href="{{ path('index' , {'category' : 'Sleep'}) }}">Sleep</a></li>
                     </ul>
                 </li>
                 {% if (app.user is not null) and ('ROLE_ADMIN' in app.user.roles) %}

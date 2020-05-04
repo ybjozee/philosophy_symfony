@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Post;
 use App\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,6 +31,14 @@ class CommentRepository extends ServiceEntityRepository
         return (new Paginator($qb))->paginate($page);
     }
 
+    public function getCommentsForPost(Post $post, int $page = 1): Paginator
+    {
+        $qb = $this->createQueryBuilder('comment')
+            ->where('comment.post = :post')
+            ->setParameter('post', $post)
+            ->orderBy('comment.publishedAt', 'DESC');
+        return (new Paginator($qb))->paginate($page);
+    }
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */

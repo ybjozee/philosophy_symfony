@@ -19,10 +19,10 @@ class IndexController extends AbstractController
     {
         $page = $request->query->get('page') ?? 1;
         $tag = $tagRepository->findByTag($request->query->get('tag'));
-
+        $category = $request->query->get('category');
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
-            'paginator' => $postRepository->getPage($page, $tag),
+            'paginator' => $postRepository->getPage($page, $tag, $category),
             'featuredPosts' => $postRepository->getFeaturedPosts(),
             'tags' => $tagRepository->findAll()
         ]);
