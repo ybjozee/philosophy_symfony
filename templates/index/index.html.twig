@@ -11,7 +11,8 @@
                         <div class="entry" style="background-image:url('{{ mainPost.headerImage }}');">
 
                             <div class="entry__content">
-                                <span class="entry__category"><a href="{{ path('index', {'category' : mainPost.category}) }}">{{ mainPost.category }}</a></span>
+                                <span class="entry__category"><a
+                                            href="{{ path('index', {'category' : mainPost.category}) }}">{{ mainPost.category }}</a></span>
 
                                 <h1><a href="{{ path('view_post', {'slug': mainPost.slug}) }}"
                                        title="">{{ mainPost.title }}</a></h1>
@@ -29,28 +30,28 @@
                             </div> <!-- end entry__content -->
                         </div> <!-- end entry -->
                     </div> <!-- end featured__big -->
-                        {% for item in featuredPosts|slice(1) %}
-                    <div class="featured__column featured__column--small">
-                        <div class="entry"
-                             style="background-image:url('{{ item.headerImage }}');">
-                            <div class="entry__content">
-                                <span class="entry__category"><a href="{{ path('index', {'category' : item.category}) }}">{{ item.category }}</a></span>
+                    {% for item in featuredPosts|slice(1) %}
+                        <div class="featured__column featured__column--small">
+                            <div class="entry"
+                                 style="background-image:url('{{ item.headerImage }}');">
+                                <div class="entry__content">
+                                    <span class="entry__category"><a
+                                                href="{{ path('index', {'category' : item.category}) }}">{{ item.category }}</a></span>
 
-                                <h1><a href="{{ path('view_post', {'slug' : item.slug}) }}"
-                                       title="">{{ item.title }}</a></h1>
+                                    <h1><a href="{{ path('view_post', {'slug' : item.slug}) }}"
+                                           title="">{{ item.title }}</a></h1>
 
-                                <ul class="entry__meta">
-                                    <li>{{ item.author.username }}</li>
-                                    <li>{{ item.publishedAt | date("d F, Y") }}</li>
-                                </ul>
-                            </div>
-                        </div> <!-- end entry__content -->
+                                    <ul class="entry__meta">
+                                        <li>{{ item.author.username }}</li>
+                                        <li>{{ item.publishedAt | date("d F, Y") }}</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
 
-                    </div> <!-- end entry -->
+                        </div> <!-- end entry -->
                     {% endfor %}
                 </div> <!-- end featured -->
             </div>
-        </div>
         </div>
 
     </section>
@@ -58,7 +59,7 @@
 
     <!-- s-content
     ================================================== -->
-    <section class="s-content">
+    <section class="s-content" id="babyContentSection">
         <div class="row masonry-wrap">
             <div class="masonry">
 
@@ -81,15 +82,13 @@
 
                 </article> <!-- end article -->
 
-                {% for post in featuredPosts | slice(0,2) %}
+                {% for post in featuredPosts | slice(1,2) %}
                     {% include 'standardArticle.html.twig' with {'post' : post }  only %}
                 {% endfor %}
 
-                {% if paginator.numResults > 1 %}
-                    {% for post in paginator.results | slice(1,6) %}
-                        {% include 'standardArticle.html.twig' with {'post' : post }  only %}
-                    {% endfor %}
-                {% endif %}
+                {% for post in paginator.results | slice(1,6) %}
+                    {% include 'standardArticle.html.twig' with {'post' : post }  only %}
+                {% endfor %}
 
                 <article class="masonry__brick entry format-link" data-aos="fade-up">
 
@@ -104,11 +103,9 @@
 
                 </article> <!-- end article -->
 
-                {% if paginator.numResults > 6 %}
-                    {% for post in paginator.results | slice(6) %}
-                        {% include 'standardArticle.html.twig' with {'post' : post }  only %}
-                    {% endfor %}
-                {% endif %}
+                {% for post in paginator.results | slice(6) %}
+                    {% include 'standardArticle.html.twig' with {'post' : post }  only %}
+                {% endfor %}
 
             </div>
         </div>
@@ -117,4 +114,21 @@
     </section>
 
     {% include 'extraSection.html.twig' with {'featuredPosts' : featuredPosts, 'tags' : tags} %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        window.addEventListener('load', () => {
+            console.log('you are here');
+            let currentLocation = window.location.href;
+            const basePattern = 'https://localhost:8000/?';
+            if (currentLocation.replace(basePattern, '')) {
+                window.scroll({
+                    top: 950,
+                    left: 0,
+                    behavior: "smooth"
+                })
+            }
+        })
+    </script>
 {% endblock %}

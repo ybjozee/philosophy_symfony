@@ -22,7 +22,7 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
     private function loadComments(ObjectManager $manager)
     {
         $generator = Factory::create();
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $comment = Comment::createFromDateTime($this->getDateTime())
                 ->setAuthor($this->getAuthor())
                 ->setPost($this->getPost())
@@ -36,7 +36,7 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
     {
         $generator = Factory::create();
         return DateTimeUtility::createDateTimeFromString("{$generator->numberBetween(1, 28)}" .
-            "/{$generator->numberBetween(1, 12)}/2020");
+            "/{$generator->numberBetween(1, 4)}/2020");
     }
 
     private function getPost()

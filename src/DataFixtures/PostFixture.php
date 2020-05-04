@@ -48,7 +48,7 @@ class PostFixture extends Fixture implements DependentFixtureInterface
             $title = $articleArray['title'];
             $post = (new Post())
                 ->setTitle($title)
-                ->setSlug(Slugger::slugify($title))
+                ->setSlug(Slugger::slugify($generator->sentence(7)))
                 ->setAbstract($articleArray['description'] . $generator->sentence)
                 ->setContent($articleArray['content'] ?? implode("\n", $generator->paragraphs()))
                 ->setAuthor($this->getReference(UserFixture::ADMIN_USER_REFERENCE))
@@ -104,7 +104,7 @@ class PostFixture extends Fixture implements DependentFixtureInterface
     {
         $curl = curl_init();
 
-        $baseUrl = "https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt";
+        $baseUrl = "https://newsapi.org/v2/top-headlines?country=us&category=business&sortBy=publishedAt";
         curl_setopt_array($curl, array(
             CURLOPT_URL => "{$baseUrl}&apiKey={$this->newsAPIToken}",
             CURLOPT_RETURNTRANSFER => true,
@@ -122,7 +122,7 @@ class PostFixture extends Fixture implements DependentFixtureInterface
         $response = curl_exec($curl);
         curl_close($curl);
         $pattern = '/\[\+[\d]+ chars\]/';
-        $replacement = implode("", Factory::create()->paragraphs);
+        $replacement = implode("", Factory::create()->paragraphs(7));
         $response = preg_replace($pattern, $replacement, $response);
         return json_decode($response, true)['articles'];
     }

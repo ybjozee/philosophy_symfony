@@ -18,13 +18,13 @@
                 <div class="s-content__header col-full">
 
                     <h3>Please provide your email and password</h3>
-                    <label for="inputEmail">Email</label>
+                    <label for="inputEmail" class="required">Email</label>
                     <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
-                           class="full-width centredInput"
+                           class="full-width centredInput "
                            required
                            autofocus>
-                    <label for="inputPassword" style="margin-top: 50px">Password</label>
-                    <input type="password" name="password" id="inputPassword" class="full-width centredInput"
+                    <label for="inputPassword" style="margin-top: 50px" class="required">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="full-width centredInput "
                            required>
 
                     <input type="hidden" name="_csrf_token"

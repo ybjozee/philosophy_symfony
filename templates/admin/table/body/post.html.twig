@@ -4,10 +4,10 @@
         <td>{{ post.author.username }}</td>
         <td>{{ post.publishedAt | date('l jS F, Y') }} </td>
         <td>
-            <a class="icn__view" href="{{ path('edit_post', {'id':post.id}) }}"></a>
+            <span>  <a class="icn__view" href="{{ path('edit_post', {'id':post.id}) }}"></a></span>
         </td>
         <td>
-            <a class="icn__delete" href="{{ path('admin_delete_post', {'id' : post.id}) }}"></a>
+            <span> <a class="icn__delete" href="{{ path('admin_delete_post', {'id' : post.id}) }}"></a></span>
         </td>
     </tr>
 {% endfor %}

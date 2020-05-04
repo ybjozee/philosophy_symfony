@@ -21,21 +21,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("add", name="add_post")
+     * @Route("post/edit/{id}", name="edit_post")
      */
-    public function addPost(Request $request): Response
+    public function edit(Request $request, Post $post): Response
     {
-        $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $shouldRedirect = $this->getOutcomeOfFormHandling($form, $request, $post);
         return $shouldRedirect ?? $this->returnPostView($post, $form);
     }
 
     /**
-     * @Route("post/edit/{id}", name="edit_post")
+     * @Route("add", name="add_post")
      */
-    public function edit(Request $request, Post $post): Response
+    public function addPost(Request $request): Response
     {
+        $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $shouldRedirect = $this->getOutcomeOfFormHandling($form, $request, $post);
         return $shouldRedirect ?? $this->returnPostView($post, $form);
