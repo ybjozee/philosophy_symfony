@@ -43,6 +43,21 @@ class PostRepository extends ServiceEntityRepository
         }
         return (new Paginator($qb))->paginate($page);
     }
+
+    public function getSearchPaginator(array $keywords): Paginator
+    {
+        $qb = $this->createQueryBuilder('post');
+        foreach ($keywords as $keyword) {
+            if ($keyword !== '') {
+                $qb->where('post.title like :keyword')
+                    ->orWhere('post.abstract like :keyword')
+                    ->orWhere('post.content like :keyword')
+                    ->setParameter('keyword', "%{$keyword}%");
+            }
+        }
+        return (new Paginator($qb))->paginate();
+
+    }
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */

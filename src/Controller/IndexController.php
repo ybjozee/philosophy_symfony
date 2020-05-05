@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", methods={"GET"}, name="index")
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(Request $request, PostRepository $postRepository,
                           TagRepository $tagRepository): Response
@@ -23,6 +23,23 @@ class IndexController extends AbstractController
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
             'paginator' => $postRepository->getPage($page, $tag, $category),
+            'featuredPosts' => $postRepository->getFeaturedPosts(),
+            'tags' => $tagRepository->findAll()
+        ]);
+    }
+
+    /**
+     * @Route("/find", name="find_articles", methods={"GET"})
+     */
+    public function search(Request $request, PostRepository $postRepository,
+                           TagRepository $tagRepository)
+    {
+        $keywords = $request->query->get('keywords');
+        $paginator = $postRepository->getSearchPaginator(explode(' ', $keywords));
+//        dump($paginator);
+        return $this->render('index/index.html.twig', [
+            'controller_name' => 'IndexController',
+            'paginator' => $paginator,
             'featuredPosts' => $postRepository->getFeaturedPosts(),
             'tags' => $tagRepository->findAll()
         ]);
