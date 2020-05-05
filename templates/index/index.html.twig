@@ -119,10 +119,11 @@
 {% block javascripts %}
     <script>
         window.addEventListener('load', () => {
-            console.log('you are here');
-            let currentLocation = window.location.href;
-            const basePattern = 'https://localhost:8000/?';
-            if (currentLocation.replace(basePattern, '')) {
+            const currentLocation = window.location.href;
+            const basePattern = 'https://localhost:8000/';
+            const filteredString = currentLocation.replace(basePattern, '');
+
+            if (filteredString !== '') {
                 window.scroll({
                     top: 950,
                     left: 0,
