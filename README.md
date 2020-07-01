@@ -47,7 +47,7 @@ requirements.
 
         composer install
 
-- create your local folder
+- create your local .env file
 
         cp .env .env.local
 
